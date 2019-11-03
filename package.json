@@ -1,0 +1,19 @@
+{
+  "name": "bookmarc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarksASP95/bookmarc.git"
+  },
+  "author": "Marco Suárez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarksASP95/bookmarc/issues"
+  },
+  "homepage": "https://github.com/MarksASP95/bookmarc#readme"
+}
