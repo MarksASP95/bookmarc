@@ -7,7 +7,7 @@ const postSchema = new Schema({
         trim: true
     },
     author: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     content: {
@@ -24,11 +24,11 @@ const postSchema = new Schema({
     },
     num_likes: {
         type: Number,
-        required: true
+        default: 0
     },
     comments: {
-        type: [{content: String, user_id: mongoose.Schema.Types.ObjectId}],
-        required: true
+        type: [{content: String, user_id: Schema.Types.ObjectId}],
+        default: []
     }
 })
 
