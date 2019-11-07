@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const { createOrIncreaseTags } = require('../controllers/tag.controller')
 
 const postController = {}
 
@@ -28,7 +29,6 @@ postController.getPost = async (req, res) => {
 }
 
 postController.createPost = async (req, res) => {
-
     const { title, author, content, tags } = req.body
     const newPost = new Post({
         title: title,
@@ -36,8 +36,37 @@ postController.createPost = async (req, res) => {
         content: content,
         tags: tags
     })
-    await newPost.save()
+
+    await newPost.save((error, result) => {
+        if(error){
+            res.json({status: `Post could not be created. ${error}`})
+            return
+        }
+        
+        createOrIncreaseTags(tags)
+        
+    })
     res.json({status: 'Post created'})
+}
+
+postController.editPost = async (req, res) => {
+    const { title, content, tags } = req.body
+    await Post.findOneAndUpdate(
+        {_id: req.params.id},
+        {
+            title: title,
+            content: content,
+            tags: tags
+        }
+    )
+    res.json({status: "Post edited"})
+}
+
+postController.deletePost = async (req, res) => {
+    await Post.findOneAndDelete(
+        {_id: req.params.id}
+    )
+    res.json({status: "Post deleted"})
 }
 
 module.exports = postController
