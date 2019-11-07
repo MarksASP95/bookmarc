@@ -9,7 +9,7 @@ const tagSchema = new Schema({
     },
     num_use: {
         type: Number,
-        required: true
+        default: 0
     }
 })
 
