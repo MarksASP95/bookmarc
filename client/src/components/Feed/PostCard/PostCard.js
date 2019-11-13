@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import postBanner from '../../../assets/images/test/network.jpg'
 import userPicture from '../../../assets/images/test/marcoasp.PNG'
-import './PostCard.scss'
+
+import './PostCardMain.scss'
+import './PostCardRegular.scss'
 
 const PostCard = (props) => {
 
@@ -18,24 +20,38 @@ const PostCard = (props) => {
         tags = `${tags} #${tag}`
     })
 
+    const postCardType = props.main ? 'main' : 'regular'
+
     return (
-        <div className="postcard-component aqua-black-border shadow-side">
-            <div className="post-banner" style={{backgroundImage:`url(${postBanner})`}}></div>
+        <div className={`postcard-component ${postCardType} aqua-black-border shadow-side`}>
+            {props.main ? <div className="post-banner" style={{backgroundImage:`url(${postBanner})`}}></div> : null}
             <div className="post-meta">
                 <h2 className="post-title">{props.title}</h2>
                 <div className="user-picture" style={{backgroundImage:`url(${userPicture})`}}></div>
-                <p className="post-meta-main">
-                    {`${props.author} - ${months[props.date.getMonth()]} ${props.date.getDate()} (${format(props.date)})`}
-                </p>
+                {
+                    props.main ? 
+                    <p className="post-meta-main">
+                        {`${props.author} - ${months[props.date.getMonth()]} ${props.date.getDate()} (${format(props.date)})`}
+                    </p>
+                    : 
+                    null
+                }
                 <p className="tags">{tags}</p>
-                <div className="likes feedback">
-                    <FontAwesomeIcon icon="heart" />
-                    <span>{props.num_likes}</span>
-                </div>
-                <div className="comments feedback">
-                    <FontAwesomeIcon icon="comment"/>
-                    <span>{props.num_comments}</span>
-                </div>
+                {
+                    props.main ? 
+                    <React.Fragment>
+                        <div className="likes feedback">
+                            <FontAwesomeIcon icon="heart" />
+                            <span>{props.num_likes}</span>
+                        </div>
+                        <div className="comments feedback">
+                            <FontAwesomeIcon icon="comment"/>
+                            <span>{props.num_comments}</span>
+                        </div>
+                    </React.Fragment>
+                    :
+                    <span className="by">by {props.author}</span>
+                }
                 <span className="read-minutes">{`${props.read_minutes} minute read`}</span>
             </div>
         </div>
