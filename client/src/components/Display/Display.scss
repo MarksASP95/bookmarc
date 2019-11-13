@@ -1,0 +1,9 @@
+.display-component {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+
+    margin-top: 20px;
+}
