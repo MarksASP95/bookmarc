@@ -1,0 +1,120 @@
+@import '../../constants/styles/fonts';
+@import '../../constants/styles/colors';
+
+$header-height: 50px;
+
+.header-component {
+    width: 100%;
+    height: $header-height;
+    background-color: $blueck;
+    
+    .header-content {
+        display: grid;
+        grid-template-columns: 25% 50% 25%;
+
+        a {
+            text-decoration: none;
+            grid-column-start: 1;
+            grid-column-end: 2;
+        }
+    
+        h1 {
+            display: inline-block;
+            width: 100%;
+            height: $header-height;
+            box-sizing: border-box;
+            line-height: $header-height;
+            font-family: $title-bold;
+            color: $white;
+        }
+    
+        .search {
+            display: block;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            
+            input {
+                height: $header-height;
+                box-sizing: border-box;
+                width: 90%;
+                background-color: $light-aqua;
+                border: none;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 16px;
+                background-image: url(../../assets/images/icons/search_1.png);
+                background-repeat: no-repeat;
+                background-position: top 50% left 10px;
+                background-size: auto 60%;
+                padding-left: 44px;
+            }
+        }
+
+        .header-buttons {
+            grid-column-start: 3;
+            grid-column-end: 4;
+            display: grid;
+            grid-template-columns: 40px 40px 22% 22% 22%;
+            column-gap: 1px;
+
+            .header-button {
+                // border: 1px solid red;
+                box-sizing: border-box;
+                background-color: $dark-aqua;
+                transition: all .05s ease-in-out;
+                
+                :hover {
+                    background-color: $light-aqua;
+                    transition: all .05s ease-in-out;
+
+                    span, svg {
+                        color: $dark-aqua; 
+                    }
+                }
+                
+                a {
+                         
+                    text-decoration: none;
+                    color: $white;
+                    height: 100%;
+                    width: 100%;
+                    font-family: $title-bold;
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    svg {
+                        font-size: 18px;
+                        color: $white;
+                    }
+                }
+            }
+
+            .header-button:first-child {
+                border: none;
+            }
+            .header-button {
+                // border-left: 2px solid $light-aqua;
+            }
+
+            .create-post-button {
+                grid-column: 1/4;
+
+                a {
+
+                    span {
+                        font-size: 18px;
+                    }
+                }
+            }
+            .notifications-button {
+                grid-column: 4/5;
+            }
+            .user-button {
+                grid-column: 5/6;
+            }
+        }
+
+    }
+
+
+}
