@@ -1,0 +1,93 @@
+@import './PostCard';
+
+.postcard-component.main {
+
+    grid-template-rows: 200px 1fr;
+
+    .post-banner {
+        grid-column: 1/13;
+        grid-row: 1/2;
+
+        box-sizing: border-box;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .post-meta {
+        display: grid;
+        grid-column: 1/13;
+        grid-row: 2/3;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: auto repeat(4, 1fr);
+        align-items: center;
+        background-color: $white;
+
+        .user-picture {
+            width: 65%;
+            max-width: 80px;
+            margin: 0 auto;
+            border-radius: 50%;
+            grid-column: 1/3;
+            grid-row: 2/4;
+
+            box-sizing: border-box;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+            border: 3px solid $blueck;
+
+        }
+
+        .user-picture:after {
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+        }
+
+        .post-meta-main {
+            grid-row: 2/3;
+            grid-column: 3/13;
+            font-size: 20px;
+            align-self: end;
+        }
+
+        .tags {
+            grid-row: 3/4;
+            grid-column: 3/13;
+            font-size: 16px;
+            align-self: start;
+        }
+
+        .feedback {
+            display: flex;
+            justify-content: space-around;
+            grid-row: 5/6;
+            max-width: 75px;
+            background-color: $aqua;
+            font-size: 18px;
+        }
+        .likes {
+            grid-column: 1/3;
+        }
+        .comments {
+            grid-column: 3/5;
+        }
+
+        .read-minutes {
+            grid-row: 5/6;
+            grid-column: 10/13;
+            background-color: $aqua;
+            font-family: $post-title;
+            font-size: 18px;
+        }
+    }
+
+    h2 {
+        font-size: 40px;
+        grid-column: 1/13;
+        grid-row: 1/2;
+        margin: 0 20px;
+    }
+}
