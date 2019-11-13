@@ -2,31 +2,16 @@
 @import '../../../constants/styles/colors';
 
 .postcard-component {
-
-    grid-column: 1/19;
+    
     box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 200px 1fr;
-    
-
-    
-    .post-banner {
-        grid-column: 1/13;
-        grid-row: 1/2;
-
-        box-sizing: border-box;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-    }
 
     .post-meta {
         display: grid;
         grid-column: 1/13;
         grid-row: 2/3;
         grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: auto repeat(4, 1fr);
         align-items: center;
         background-color: $white;
 
@@ -60,12 +45,7 @@
             align-self: end;
         }
 
-        .tags {
-            grid-row: 3/4;
-            grid-column: 3/13;
-            font-size: 16px;
-            align-self: start;
-        }
+
 
         .feedback {
             display: flex;
@@ -84,8 +64,6 @@
         }
 
         .read-minutes {
-            grid-row: 5/6;
-            grid-column: 10/13;
             text-align: right;
             margin-right: 20px;
             background-color: $aqua;
@@ -100,10 +78,6 @@
 
     h2 {
         font-family: $post-title;
-        grid-column: 1/13;
-        grid-row: 1/2;
-        margin: 0 20px;
-        font-size: 40px;
     }
 
 }
