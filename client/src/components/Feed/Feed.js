@@ -3,29 +3,24 @@ import React, { Component } from 'react'
 import './Feed.scss'
 
 import postList from './postList'
-import PostCard from './PostCard/PostCard';
+import topicList from './topicList'
+import PostCard from './PostCard/PostCard'
+import Posts from './Posts/Posts'
+import Topics from './Topics/Topics'
 
 export default class Feed extends Component {
 
     state = {
-        posts: postList
+        posts: postList,
+        topics: topicList
     }
 
     render() {
         return (
             <div className="feed-component">
-                {this.state.posts.map((post, index) => (
-                    <PostCard
-                        main={index === 0}
-                        title={post.title}
-                        author={post.author}
-                        date={post.date}
-                        tags={post.tags}
-                        num_likes={post.num_likes}
-                        num_comments={post.num_comments}
-                        read_minutes={post.read_minutes}
-                    />
-                ))}
+                <Posts posts={this.state.posts} />
+                <Topics topics={this.state.topics} />
+                
             </div>
         )
     }

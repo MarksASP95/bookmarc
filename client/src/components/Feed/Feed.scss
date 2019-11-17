@@ -1,5 +1,7 @@
 .feed-component {
     display: grid;
-    grid-column: 1/19;
-    row-gap: 20px;
+    grid-template-columns: repeat(24, 1fr);
+    grid-column: 1/25;
+
+    grid-gap: 20px;
 }
