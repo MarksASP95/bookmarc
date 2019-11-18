@@ -6,4 +6,10 @@
 
 .new-post-component {
     grid-column: 1/25;
+
+    .bm-input {
+        &.tags {
+            width: 40%;
+        }
+    }
 }
