@@ -7,10 +7,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlus, faBell, faUser, faHeart, faComment } from '@fortawesome/free-solid-svg-icons'
 
 import Header from './components/Header/Header'
-import PostCard from './components/Feed/PostCard/PostCard'
-import Container from './components/Container/Container';
-import Display from './components/Display/Display';
-import Feed from './components/Feed/Feed';
+import Container from './components/Container/Container'
+import Display from './components/Display/Display'
+import Feed from './components/Feed/Feed'
+import NewPost from './components/NewPost/NewPost'
 
 function App() {
 
@@ -20,10 +20,10 @@ function App() {
     <div className="App">
       <Router>
         <Header />
-        {/* <Route path="/" exact component={Feed} /> */}
         <Container>
           <Display>
-            <Feed />
+            <Route path="/" exact component={Feed} />
+            <Route path="/create-post" component={NewPost} />
           </Display>
         </Container>
       </Router>
