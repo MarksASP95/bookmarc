@@ -1,0 +1,12 @@
+@import '../colors';
+@import '../fonts';
+
+.form-control {
+    display: flex;
+    flex-flow: column;
+    margin-bottom: 20px;
+
+    &.inline {
+        flex-flow: row;
+    }
+}

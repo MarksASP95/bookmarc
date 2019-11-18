@@ -1,0 +1,10 @@
+@import './form';
+
+.bm-label {
+    font-family: $post-title;
+    font-size: 24px;
+    
+    .bm-label-note {
+        font-size: 16px;
+    }
+}

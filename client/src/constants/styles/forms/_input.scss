@@ -1,0 +1,9 @@
+@import './textbox';
+
+.bm-input {
+    @extend .textbox;
+
+    height: 28px;
+    font-family: $title-regular;
+    font-size: 18px;
+}

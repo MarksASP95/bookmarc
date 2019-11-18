@@ -1,0 +1,21 @@
+@import './textbox';
+
+.bm-textarea {
+    @extend .textbox;
+
+    resize: none;
+    height: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 16px;
+
+    &.short {
+        height: 300px;
+    }
+    &.medium {
+        height: 400px;
+    }
+    &.large {
+        height: 550px;
+    }
+}
