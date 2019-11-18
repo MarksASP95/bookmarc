@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './Header.scss'
 
-import Container from './../Container/Container';
+import Container from './../Container/Container'
 
 export default class Header extends Component {
 
