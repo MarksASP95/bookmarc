@@ -1,0 +1,12 @@
+@import '../../../constants/styles/fonts';
+@import '../../../constants/styles/colors';
+
+.page-title-component {
+
+    margin-bottom: 40px;
+
+    h2 {
+        font-size: 30px;
+        font-family: $post-title;
+    }
+}
