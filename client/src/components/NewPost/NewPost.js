@@ -3,12 +3,34 @@ import React, { Component } from 'react'
 import './NewPost.scss'
 
 import PageTitle from './../common/PageTitle/PageTitle'
-import Chip from './../common/Chip/Chip'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import ChipsContainer from './../common/ChipsContainer/ChipsContainer'
 
 export default class NewPost extends Component {
+    
+    constructor(props) {
 
+        super(props)
+
+        this.state = {
+            tags: []
+        }
+
+    }
+
+    addTagHandler(e, newTag) {
+        if(e.which !== 13) {
+            return
+        }
+
+        // add tag
+        if(newTag !== '') {
+            this.setState({
+                tags: [...new Set([...this.state.tags, newTag])]
+            })
+        }
+    }
 
     postSchema = Yup.object().shape({
         title: Yup.string()
@@ -25,6 +47,8 @@ export default class NewPost extends Component {
     })
 
     render() {
+
+
         return (
             <div className="new-post-component">
 
@@ -34,47 +58,54 @@ export default class NewPost extends Component {
                     initialValues={{ title: '', content: '', tagsStr: '', tags: [] }}
                     // validationSchema={this.postSchema}
                     onSubmit={(values, actions) => {
-                        alert(values.title)
+                        values.tags = this.state.tags;
+                        alert(values.tags)
                     }}
                     >
                     {props => (
-                        <form onSubmit={props.handleSubmit}>
-                            <div className="form-control">
-                                <label className="bm-label">Title</label>
-                                <input 
-                                    className="bm-input" 
-                                    type="text"
-                                    onChange={props.handleChange}
-                                    onBlur={props.handleBlur}
-                                    value={props.values.title}
-                                    name="title"/>
-                            </div>
-                            
-                            <div className="form-control">
-                                <label className="bm-label">Write your post</label>
-                                <textarea 
-                                    className="bm-textarea"
-                                    onChange={props.handleChange}
-                                    onBlur={props.handleBlur}
-                                    value={props.values.content}
-                                    name="content">
-                                </textarea>
-                            </div>
-                
-                            <div className="form-control">
-                                <label className="bm-label">Tags <span className="bm-label-note">(max. 25 characters each)</span></label>
-                                <input 
-                                    placeholder="press enter on each" 
-                                    className="bm-input tags" 
-                                    type="text"
-                                    onChange={props.handleChange}
-                                    onBlur={props.handleBlur}
-                                    value={props.values.tagsStr}
-                                    name="tags"/>
-                            </div>
-                
-                            <button type="submit">Publish</button>
-                        </form>
+                        <React.Fragment>
+                            <form onSubmit={props.handleSubmit}>
+                                <div className="form-control">
+                                    <label className="bm-label">Title</label>
+                                    <input 
+                                        className="bm-input" 
+                                        type="text"
+                                        onChange={props.handleChange}
+                                        onBlur={props.handleBlur}
+                                        value={props.values.title}
+                                        name="title"/>
+                                </div>
+                                
+                                <div className="form-control">
+                                    <label className="bm-label">Write your post</label>
+                                    <textarea 
+                                        className="bm-textarea"
+                                        onChange={props.handleChange}
+                                        onBlur={props.handleBlur}
+                                        value={props.values.content}
+                                        name="content">
+                                    </textarea>
+                                </div>
+                    
+                                <div className="form-control">
+                                    <label className="bm-label">Tags <span className="bm-label-note">(max. 25 characters each)</span></label>
+                                    <input 
+                                        placeholder="press enter on each" 
+                                        className="bm-input tags" 
+                                        type="text"
+                                        onChange={props.handleChange}
+                                        onBlur={props.handleBlur}
+                                        value={props.values.tagsStr}
+                                        onKeyPress={(e) => {
+                                            this.addTagHandler(e, props.values.tagsStr)
+                                            props.values.tagsStr = ""
+                                        }}
+                                        name="tagsStr"/>
+                                    <ChipsContainer elements={this.state.tags} />
+                                </div>
+                                <button onClick={props.handleSubmit} type="button">Publish</button>
+                            </form>
+                        </React.Fragment>
                     )}
                 </Formik>
 
