@@ -1,0 +1,14 @@
+@import '../../../constants/styles/fonts';
+@import '../../../constants/styles/colors';
+
+.chip-component {
+    background-color: $green-chillon;
+    width: fit-content;
+    padding: 2px 7px;
+    border-radius: 40px;
+
+    span {
+        font-family: $title-bold;
+        font-size: 14px;
+    }
+}
