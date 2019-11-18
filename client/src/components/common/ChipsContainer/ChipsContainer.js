@@ -5,11 +5,16 @@ import './ChipsContainer.scss'
 import Chip from './../Chip/Chip'
 
 export default function ChipsContainer(props) {
+
+    const deleteItem = (idx) => {
+        props.onDeleteItem(idx)
+    }
+
     return (
-        props.elements.length > 0 ?
+        props.items.length > 0 ?
             <div className="chips-container-component">
-                {props.elements.map((element, idx) => (
-                    <Chip key={idx} text={element} />
+                {props.items.map((item, idx) => (
+                    <Chip onClick={() => deleteItem(idx)} key={idx} text={item} />
                 ))}
             </div>
         :
