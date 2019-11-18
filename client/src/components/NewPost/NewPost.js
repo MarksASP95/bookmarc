@@ -32,6 +32,12 @@ export default class NewPost extends Component {
         }
     }
 
+    deleteTag(idx) {
+        let tags = this.state.tags
+        tags.splice(idx, 1);
+        this.setState({tags: tags})
+    }
+
     postSchema = Yup.object().shape({
         title: Yup.string()
             .min(2, 'Too short')
@@ -101,7 +107,7 @@ export default class NewPost extends Component {
                                             props.values.tagsStr = ""
                                         }}
                                         name="tagsStr"/>
-                                    <ChipsContainer elements={this.state.tags} />
+                                    <ChipsContainer onDeleteItem={this.deleteTag.bind(this)} items={this.state.tags} />
                                 </div>
                                 <button onClick={props.handleSubmit} type="button">Publish</button>
                             </form>
