@@ -1,0 +1,9 @@
+@import '../../constants/styles/fonts';
+@import '../../constants/styles/colors';
+@import '../../constants/styles/forms/input';
+@import '../../constants/styles/forms/textarea';
+@import '../../constants/styles/forms/label';
+
+.new-post-component {
+    grid-column: 1/25;
+}
