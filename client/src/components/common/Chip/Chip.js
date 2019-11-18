@@ -4,7 +4,7 @@ import './Chip.scss'
 
 export default function Chip(props) {
     return (
-        <div className="chip-component">
+        <div onClick={props.onClick} className="chip-component">
             <span>{props.text}</span>
         </div>
     )
