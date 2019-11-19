@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 
 import './NewPost.scss'
 
-import PageTitle from './../common/PageTitle/PageTitle'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import axios from 'axios'
+
+import PageTitle from './../common/PageTitle/PageTitle'
 import ChipsContainer from './../common/ChipsContainer/ChipsContainer'
 
 export default class NewPost extends Component {
@@ -38,6 +40,21 @@ export default class NewPost extends Component {
         this.setState({tags: tags})
     }
 
+    sendCreatePostRequest(data) {
+        axios.post('http://localhost:4000/api/posts', {
+            title: data.title,
+            author: "5dc2e5bab8b6602b943087db",
+            content: data.content,
+            tags: data.tags
+        })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
     postSchema = Yup.object().shape({
         title: Yup.string()
             .min(2, 'Too short')
@@ -64,8 +81,9 @@ export default class NewPost extends Component {
                     initialValues={{ title: '', content: '', tagsStr: '', tags: [] }}
                     // validationSchema={this.postSchema}
                     onSubmit={(values, actions) => {
-                        values.tags = this.state.tags;
-                        alert(values.tags)
+                        values.tags = this.state.tags
+                        
+                        this.sendCreatePostRequest(values)
                     }}
                     >
                     {props => (
