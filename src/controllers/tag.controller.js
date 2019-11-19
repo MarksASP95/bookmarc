@@ -19,11 +19,11 @@ tagController.createOrIncreaseTags = async (tagNames) => {
         tagQueries.push({name: tagName})
     })
 
-    let update = { $inc: {num_use: 0.5} }
+    let update = { $inc: {num_use: 1} }
     let options = { upsert: true, setDefaultsOnInsert: false }
 
     // Find the document
-    await Tag.findOneAndUpdate({$or: tagQueries}, update, options, function(error, result) {
+    Tag.findOneAndUpdate({$or: tagQueries}, update, options, function(error, result) {
         if (error) {
             console.log('Error con las tags')
             return
