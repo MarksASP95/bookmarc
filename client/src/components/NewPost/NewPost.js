@@ -26,6 +26,9 @@ export default class NewPost extends Component {
             return
         }
 
+        // format tag (replace spaces for _)
+        newTag = newTag.replace(new RegExp(' ', 'g'), '_')
+
         // add tag
         if(newTag !== '') {
             this.setState({
