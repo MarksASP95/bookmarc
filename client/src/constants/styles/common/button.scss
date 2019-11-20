@@ -2,5 +2,44 @@
 @import '../fonts';
 
 .bm-button {
+
+    height: 40px;
+    font-family: $post-title;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: auto;
+    padding: 0 10px;
+
+    &.main {
+        background-color: $blueck;
+        color: $green-chillon;
+        border: 3px solid $aqua;
+    }
+    &.secondary {
+        background-color: $dark-aqua;   
+        color: $white;
+        border: 3px solid $dark-aqua;
+    }
+    &.danger {
+        background-color: $heart;
+        color: $white;
+        border: 3px solid $blueck;
+    }
+
+    &.small {
+        width: 70px;
+    }
+    &.medium {
+        width: 100px;
+    }
+    &.large {
+        width: 200px;
+    }
+    // &.fit {
+        
+    // }
+    
+
     
 }
