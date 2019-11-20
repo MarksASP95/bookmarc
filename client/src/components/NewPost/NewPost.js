@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
 import './NewPost.scss'
+import '../../constants/styles/common/button.scss'
 
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 import PageTitle from './../common/PageTitle/PageTitle'
 import ChipsContainer from './../common/ChipsContainer/ChipsContainer'
@@ -16,7 +18,8 @@ export default class NewPost extends Component {
         super(props)
 
         this.state = {
-            tags: []
+            tags: [],
+            redirectCancel: false
         }
 
     }
@@ -100,6 +103,7 @@ export default class NewPost extends Component {
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
                                         value={props.values.title}
+                                        autoComplete="off"
                                         name="title"/>
                                 </div>
                                 
@@ -127,11 +131,23 @@ export default class NewPost extends Component {
                                             this.addTagHandler(e, props.values.tagsStr)
                                             props.values.tagsStr = ""
                                         }}
+                                        autoComplete="off"
                                         name="tagsStr"/>
                                     <ChipsContainer onDeleteItem={this.deleteTag.bind(this)} items={this.state.tags} />
                                 </div>
-                                <button onClick={props.handleSubmit} type="button">Publish</button>
+                               <div className="button-container">
+                                    <button className="bm-button main medium publish-post-button" type="button">Publish</button>
+                                    <button className="bm-button secondary medium save-post-button" type="button">Save</button>
+                                    <button 
+                                        className="bm-button danger medium cancel-post-button" 
+                                        type="button" 
+                                        onClick={() => this.setState({redirectCancel:true})}
+                                        >
+                                        Cancel
+                                    </button>
+                               </div>
                             </form>
+                            {this.state.redirectCancel ? <Redirect to="/" /> : null}
                         </React.Fragment>
                     )}
                 </Formik>
