@@ -12,12 +12,12 @@ export default class Posts extends Component {
                     <PostCard
                         main={index === 0}
                         title={post.title}
-                        author={post.author}
-                        date={post.date}
+                        author={post.author.username}
+                        date={new Date(post.date)}
                         tags={post.tags}
                         num_likes={post.num_likes}
-                        num_comments={post.num_comments}
-                        read_minutes={post.read_minutes}
+                        num_comments={post.comments.length}
+                        read_minutes={5}
                     />
                 ))}
             </div>
