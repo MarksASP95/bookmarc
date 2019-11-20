@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const User = require('../models/User')
 const { createOrIncreaseTags } = require('../controllers/tag.controller')
 
 const postController = {}
@@ -6,8 +7,11 @@ const postController = {}
 postController.getPosts = async (req, res) => {
     if(Object.keys(req.query).length === 0){
         // no es busqueda. devolver todos
-        const posts = await Post.find()
-        res.json(posts)
+        await Post.find({}, (err, posts) => {
+            User.populate(posts, {path: "author"}, (err, posts) => {
+                res.json(posts)
+            })  
+        })
     }
     else {
         // find by parameters
