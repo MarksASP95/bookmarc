@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import './Feed.scss'
 
+import axios from 'axios'
+
 import postList from './postList'
 import topicList from './topicList'
 import PostCard from './PostCard/PostCard'
@@ -11,8 +13,23 @@ import Topics from './Topics/Topics'
 export default class Feed extends Component {
 
     state = {
-        posts: postList,
-        topics: topicList
+        posts: [],
+        topics: topicList,
+    }
+
+    getPosts() {
+        axios.get('http://localhost:4000/api/posts')
+            .then(posts => {
+                console.log(posts.data)
+                this.setState({posts: posts.data})
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    componentDidMount() {
+        this.getPosts()
     }
 
     render() {
