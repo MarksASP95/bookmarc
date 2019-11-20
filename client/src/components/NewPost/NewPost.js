@@ -136,7 +136,11 @@ export default class NewPost extends Component {
                                     <ChipsContainer onDeleteItem={this.deleteTag.bind(this)} items={this.state.tags} />
                                 </div>
                                <div className="button-container">
-                                    <button className="bm-button main medium publish-post-button" type="button">Publish</button>
+                                    <button 
+                                        className="bm-button main medium publish-post-button" 
+                                        type="button"
+                                        onClick={props.handleSubmit}>Publish
+                                    </button>
                                     <button className="bm-button secondary medium save-post-button" type="button">Save</button>
                                     <button 
                                         className="bm-button danger medium cancel-post-button" 
