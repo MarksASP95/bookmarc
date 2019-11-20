@@ -12,7 +12,7 @@ export default function ChipsContainer(props) {
 
     return (
         props.items.length > 0 ?
-            <div className="chips-container-component">
+            <div className="chips-container-component" style={{flexWrap:"wrap"}}>
                 {props.items.map((item, idx) => (
                     <Chip onClick={() => deleteItem(idx)} key={idx} text={item} />
                 ))}
