@@ -8,6 +8,7 @@ import userPicture from '../../../assets/images/test/marcoasp.PNG'
 
 import './PostCardMain.scss'
 import './PostCardRegular.scss'
+import '../../../constants/styles/common/border.scss'
 
 const PostCard = (props) => {
 
