@@ -17,7 +17,7 @@ export default class Posts extends Component {
                         tags={post.tags}
                         num_likes={post.num_likes}
                         num_comments={post.comments.length}
-                        read_minutes={5}
+                        read_minutes={Math.ceil(post.content.split(" ").length / 220)}
                     />
                 ))}
             </div>
