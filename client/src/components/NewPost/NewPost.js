@@ -64,7 +64,7 @@ export default class NewPost extends Component {
 
     sendCreatePostRequest(data) {
         this.setState({isPosting: true})
-        axios.post('http://localhost:4000/api/poss', {
+        axios.post('http://localhost:4000/api/posts', {
             title: data.title,
             author: "5dc2e5bab8b6602b943087db",
             content: data.content,
