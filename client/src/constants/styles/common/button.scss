@@ -14,7 +14,8 @@
     &.main {
         background-color: $blueck;
         color: $green-chillon;
-        border: 3px solid $aqua;
+        border: none;
+        // border: 3px solid $aqua;
     }
     &.secondary {
         background-color: $dark-aqua;   
@@ -24,7 +25,8 @@
     &.danger {
         background-color: $heart;
         color: $white;
-        border: 3px solid $blueck;
+        border: none;
+        // border: 3px solid $blueck;
     }
 
     &.small {
@@ -40,6 +42,9 @@
         
     // }
     
+    &.not-allowed {
+        cursor: not-allowed;
+    }
 
     
 }
