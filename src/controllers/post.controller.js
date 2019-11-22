@@ -7,11 +7,14 @@ const postController = {}
 postController.getPosts = async (req, res) => {
     if(Object.keys(req.query).length === 0){
         // no es busqueda. devolver todos
-        await Post.find({}, (err, posts) => {
-            User.populate(posts, {path: "author"}, (err, posts) => {
-                res.json(posts)
-            })  
-        })
+
+        await Post.find({}).sort({date: 'desc'})
+            .then( posts => {
+                User.populate(posts, {path: "author"}, (err, posts) => {
+                    res.json(posts)
+                })  
+            })
+
     }
     else {
         // find by parameters
