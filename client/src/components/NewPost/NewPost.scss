@@ -6,6 +6,7 @@
 
 .new-post-component {
     grid-column: 1/25;
+    position: relative;
 
     .bm-input {
         &.tags {
@@ -21,7 +22,6 @@
 
     .button-container {
         width: 100%;
-        border: 1px solid red;
 
         .publish-post-button {
 
