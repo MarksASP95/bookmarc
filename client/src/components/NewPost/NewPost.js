@@ -10,6 +10,7 @@ import { Redirect } from 'react-router-dom'
 
 import PageTitle from './../common/PageTitle/PageTitle'
 import ChipsContainer from './../common/ChipsContainer/ChipsContainer'
+import LoadingBar from './../common/LoadingBar/LoadingBar';
 
 export default class NewPost extends Component {
     
@@ -19,7 +20,8 @@ export default class NewPost extends Component {
 
         this.state = {
             tags: [],
-            redirectCancel: false
+            redirect: false,
+            isPosting: false
         }
 
     }
@@ -46,18 +48,33 @@ export default class NewPost extends Component {
         this.setState({tags: tags})
     }
 
+    handlePostResult(success) {
+
+        let onError = () => {
+            alert("Error al subir el post")
+            // anything else you wanna do
+        }
+
+        setTimeout(() => {
+            if(!success) { onError() }
+            this.setState({isPosting: success})
+        }, 600);
+    }
+
+
     sendCreatePostRequest(data) {
-        axios.post('http://localhost:4000/api/posts', {
+        this.setState({isPosting: true})
+        axios.post('http://localhost:4000/api/poss', {
             title: data.title,
             author: "5dc2e5bab8b6602b943087db",
             content: data.content,
             tags: data.tags
         })
         .then(response => {
-            console.log(response)
+            this.handlePostResult(true)
         })
         .catch(error => {
-            console.log(error)
+            this.handlePostResult(false)
         })
     }
 
@@ -77,10 +94,11 @@ export default class NewPost extends Component {
 
     render() {
 
-
+        let cursorClass = this.state.isPosting ? 'not-allowed' : null
+        
         return (
             <div className="new-post-component">
-
+                {this.state.isPosting ? <LoadingBar /> : null}
                 <PageTitle title="New post!" />
 
                 <Formik
@@ -137,21 +155,31 @@ export default class NewPost extends Component {
                                 </div>
                                <div className="button-container">
                                     <button 
-                                        className="bm-button main medium publish-post-button" 
+                                        className={`bm-button main medium publish-post-button ${cursorClass}`}
                                         type="button"
-                                        onClick={props.handleSubmit}>Publish
+                                        onClick={props.handleSubmit}
+                                        disabled={this.state.isPosting}
+                                        >
+                                        Publish
                                     </button>
-                                    <button className="bm-button secondary medium save-post-button" type="button">Save</button>
                                     <button 
-                                        className="bm-button danger medium cancel-post-button" 
+                                        className={`bm-button secondary medium save-post-button ${cursorClass}`}
+                                        type="button"
+                                        disabled={this.state.isPosting}
+                                        >
+                                        Save
+                                    </button>
+                                    <button 
+                                        className={`bm-button danger medium cancel-post-button ${cursorClass}`} 
                                         type="button" 
-                                        onClick={() => this.setState({redirectCancel:true})}
+                                        onClick={() => this.setState({redirect:true})}
+                                        disabled={this.state.isPosting}
                                         >
                                         Cancel
                                     </button>
                                </div>
                             </form>
-                            {this.state.redirectCancel ? <Redirect to="/" /> : null}
+                            {this.state.redirect ? <Redirect to="/" /> : null}
                         </React.Fragment>
                     )}
                 </Formik>
