@@ -1,0 +1,36 @@
+@import '../../../constants/styles/colors';
+
+.loading-bar-component {
+    width: 100%;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+      
+    .loading-bar {
+        height: 4px;
+        background-color: $blueck;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    .loading-bar-value {
+        width: 100%;
+        height: 100%;
+        background-color: $green-chillon;
+        animation: indeterminateAnimation 1s infinite linear;
+        transform-origin: 0% 50%;
+    }
+    
+    @keyframes indeterminateAnimation {
+    0% {
+        transform:  translateX(0) scaleX(0);
+    }
+    40% {
+        transform:  translateX(0) scaleX(0.4);
+    }
+    100% {
+        transform:  translateX(100%) scaleX(0.5);
+    }
+    }
+}
