@@ -7,6 +7,8 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+import toastr from 'toastr'
+import 'toastr/toastr.scss'
 
 import PageTitle from './../common/PageTitle/PageTitle'
 import ChipsContainer from './../common/ChipsContainer/ChipsContainer'
@@ -15,15 +17,20 @@ import LoadingBar from './../common/LoadingBar/LoadingBar';
 export default class NewPost extends Component {
     
     constructor(props) {
-
         super(props)
 
         this.state = {
             tags: [],
             redirect: false,
-            isPosting: false
+            isAttemptingToPost: false,
+            posted: false
         }
 
+        // settin toastr options
+        toastr.options.timeOut = 7000
+        toastr.options.showMethod = 'fadeIn'
+        // disable click event on every toastr after it's hidden
+        toastr.options.onHidden = () => {toastr.options.onCloseClick = null}
     }
 
     addTagHandler(e, newTag) {
@@ -50,20 +57,27 @@ export default class NewPost extends Component {
 
     handlePostResult(success) {
 
-        let onError = () => {
-            alert("Error al subir el post")
-            // anything else you wanna do
+        const onError = () => {
+            toastr.options.onclick = () => {
+                // show possible reasons why the post was not submitted
+            }
+            toastr.error('Something wrong happened. Click for more info', 'Oops!')
+        }
+
+        const onSuccess = () => {
+            toastr.success('Your post has been submitted! Readers can now find it.', 'Yay!')
         }
 
         setTimeout(() => {
-            if(!success) { onError() }
-            this.setState({isPosting: success})
+            success ? onSuccess() : onError()
+            this.setState({isAttemptingToPost: success, posted: success})
         }, 600);
     }
 
 
     sendCreatePostRequest(data) {
-        this.setState({isPosting: true})
+        this.setState({isAttemptingToPost: true})
+
         axios.post('http://localhost:4000/api/posts', {
             title: data.title,
             author: "5dc2e5bab8b6602b943087db",
@@ -94,11 +108,17 @@ export default class NewPost extends Component {
 
     render() {
 
-        let cursorClass = this.state.isPosting ? 'not-allowed' : null
+        let cursorClass = this.state.isAttemptingToPost ? 'not-allowed' : null
+
+        if(this.state.posted){
+            setTimeout(() => {
+                this.setState({posted: false, redirect: true})
+            }, 600)
+        }
         
         return (
             <div className="new-post-component">
-                {this.state.isPosting ? <LoadingBar /> : null}
+                {this.state.isAttemptingToPost ? <LoadingBar /> : null}
                 <PageTitle title="New post!" />
 
                 <Formik
@@ -158,14 +178,14 @@ export default class NewPost extends Component {
                                         className={`bm-button main medium publish-post-button ${cursorClass}`}
                                         type="button"
                                         onClick={props.handleSubmit}
-                                        disabled={this.state.isPosting}
+                                        disabled={this.state.isAttemptingToPost}
                                         >
                                         Publish
                                     </button>
                                     <button 
                                         className={`bm-button secondary medium save-post-button ${cursorClass}`}
                                         type="button"
-                                        disabled={this.state.isPosting}
+                                        disabled={this.state.isAttemptingToPost}
                                         >
                                         Save
                                     </button>
@@ -173,7 +193,7 @@ export default class NewPost extends Component {
                                         className={`bm-button danger medium cancel-post-button ${cursorClass}`} 
                                         type="button" 
                                         onClick={() => this.setState({redirect:true})}
-                                        disabled={this.state.isPosting}
+                                        disabled={this.state.isAttemptingToPost}
                                         >
                                         Cancel
                                     </button>
