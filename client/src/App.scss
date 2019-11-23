@@ -1,3 +1,6 @@
+@import './constants/styles/colors';
+@import './constants/styles/fonts';
+
 @font-face {
     font-family: Titillium-Light;
     src: local("assets/fonts/TitilliumWeb/TitilliumWeb-Light"),
@@ -38,4 +41,18 @@
     src: local("assets/fonts/Lobster/Lobster-Regular"),
     url(assets/fonts/Lobster/Lobster-Regular.ttf);
     font-weight: nomal;
+}
+
+.toast {
+    font-family: $post-title;
+    box-shadow: none !important;
+}
+
+.toast-error {
+    background-color: $heart !important;
+}
+
+.toast-success {
+    background-color: $blueck !important;
+    color: $green-chillon !important;
 }
