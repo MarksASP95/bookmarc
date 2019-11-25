@@ -4,7 +4,7 @@ import './App.scss';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faBell, faUser, faHeart, faComment } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faBell, faUser, faHeart, faComment, faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import Header from './components/Header/Header'
 import Container from './components/Container/Container'
@@ -14,7 +14,7 @@ import NewPost from './components/NewPost/NewPost'
 
 function App() {
 
-  library.add(faPlus, faBell, faUser, faHeart, faComment)
+  library.add(faPlus, faBell, faUser, faHeart, faComment, faUpload)
 
   return (
     <div className="App">
