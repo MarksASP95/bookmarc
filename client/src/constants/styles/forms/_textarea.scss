@@ -1,4 +1,5 @@
 @import './textbox';
+@import '../colors';
 
 .bm-textarea {
     @extend .textbox;
@@ -17,5 +18,9 @@
     }
     &.large {
         height: 550px;
+    }
+
+    &.error {
+        border-color: $heart;
     }
 }

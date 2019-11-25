@@ -9,4 +9,9 @@
     &.inline {
         flex-flow: row;
     }
+
+    p.error {
+        color: $heart;
+        font-family: $post-title;
+    }
 }
