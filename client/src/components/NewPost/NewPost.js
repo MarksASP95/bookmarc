@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import './NewPost.scss'
 import '../../constants/styles/common/button.scss'
 
-import { Formik } from 'formik'
+import { Formik, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
@@ -33,20 +33,24 @@ export default class NewPost extends Component {
         toastr.options.onHidden = () => {toastr.options.onCloseClick = null}
     }
 
-    addTagHandler(e, newTag) {
+    addTagHandler(e, newTag, callback) {
         if(e.which !== 13) {
             return
         }
 
-        // format tag (replace spaces for _)
-        newTag = newTag.replace(new RegExp(' ', 'g'), '_')
-
-        // add tag
         if(newTag !== '') {
+            // format tag (replace spaces for _)
+            newTag = newTag.replace(new RegExp(' ', 'g'), '_')
+            // create new tag list
+            const newTags = [...new Set([...this.state.tags, newTag])]
+            // update form tags
+            callback(newTags)
+            // update state tags
             this.setState({
-                tags: [...new Set([...this.state.tags, newTag])]
+                tags: newTags
             })
         }
+        
     }
 
     deleteTag(idx) {
@@ -78,7 +82,7 @@ export default class NewPost extends Component {
     sendCreatePostRequest(data) {
         this.setState({isAttemptingToPost: true})
 
-        axios.post('http://localhost:4000/api/posts', {
+        axios.post('http://localhost:4000/api/poss', {
             title: data.title,
             author: "5dc2e5bab8b6602b943087db",
             content: data.content,
@@ -92,18 +96,25 @@ export default class NewPost extends Component {
         })
     }
 
+    validateTags(tags) {
+        let error;
+        if(tags.length < 2) {
+            error = 'Give us at least 2 tags'
+        }
+    }
+
     postSchema = Yup.object().shape({
         title: Yup.string()
-            .min(2, 'Too short')
-            .max(100, 'Too long')
+            .min(2, 'This title is too short')
+            .max(100, 'Woah! Less than 100 characters okay?')
             .required('A post needs a name!'),
         content: Yup.string()
-            .min(200, 'Too short')
+            .min(200, 'A post should have at least 200 characters')
             .required('Uuh yeah, you have to write something'),
         tagsStr: Yup.string(),
         tags: Yup.array()
-            .min(2, 'At least 2 tags')
-            .required()
+            .min(2, 'Give us at least 2 tags')
+            .required('Give us at least 2 tags')
     })
 
     render() {
@@ -123,7 +134,7 @@ export default class NewPost extends Component {
 
                 <Formik
                     initialValues={{ title: '', content: '', tagsStr: '', tags: [] }}
-                    // validationSchema={this.postSchema}
+                    validationSchema={this.postSchema}
                     onSubmit={(values, actions) => {
                         values.tags = this.state.tags
                         
@@ -136,24 +147,24 @@ export default class NewPost extends Component {
                                 <div className="form-control">
                                     <label className="bm-label">Title</label>
                                     <input 
-                                        className="bm-input" 
+                                        className={`bm-input ${props.errors.title && props.touched.title ? 'error' : null}`}
                                         type="text"
                                         onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
                                         value={props.values.title}
                                         autoComplete="off"
                                         name="title"/>
+                                    {props.errors.title && props.touched.title && <p className="error">{props.errors.title}</p>}
                                 </div>
                                 
                                 <div className="form-control">
                                     <label className="bm-label">Write your post</label>
                                     <textarea 
-                                        className="bm-textarea"
+                                        className={`bm-textarea ${props.errors.content && props.touched.content ? 'error' : null}`}
                                         onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
                                         value={props.values.content}
                                         name="content">
                                     </textarea>
+                                    {props.errors.content && props.touched.content && <p className="error">{props.errors.content}</p>}
                                 </div>
                     
                                 <div className="form-control">
@@ -164,13 +175,17 @@ export default class NewPost extends Component {
                                         type="text"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
+                                        validate={this.validateTags(props.values.tags)}
                                         value={props.values.tagsStr}
                                         onKeyPress={(e) => {
-                                            this.addTagHandler(e, props.values.tagsStr)
+                                            this.addTagHandler(e, props.values.tagsStr, (tags) => {
+                                                props.values.tags = tags
+                                            })
                                             props.values.tagsStr = ""
                                         }}
                                         autoComplete="off"
                                         name="tagsStr"/>
+                                    {props.errors.tags && props.touched.tagsStr && <p className="error">{props.errors.tags}</p>}
                                     <ChipsContainer onDeleteItem={this.deleteTag.bind(this)} items={this.state.tags} />
                                 </div>
                                <div className="button-container">
