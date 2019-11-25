@@ -30,18 +30,29 @@ postController.getPosts = async (req, res) => {
     }
 }
 
+postController.getSavedPosts = (req, res) => {
+
+}
+
+postController.getPublishedPosts = (req, res) => {
+
+}
+
 postController.getPost = async (req, res) => {  
     const post = Post.findById(req.params.id);
     res.json(post);
 }
 
+// use to create a post that is unexistent and publish/save it right away
+// USE FOR NEW POSTS ONLY (e.g.: on "NewPost component" to be specific)
 postController.createPost = async (req, res) => {
-    const { title, author, content, tags } = req.body
+    const { title, author, content, tags, published } = req.body
     const newPost = new Post({
         title: title,
         author: author,
         content: content,
-        tags: tags
+        tags: tags,
+        published: published
     })
 
     await newPost.save((error, result) => {
@@ -50,11 +61,24 @@ postController.createPost = async (req, res) => {
             return
         }
         
-        createOrIncreaseTags(tags)
+        published ? createOrIncreaseTags(tags) :  null
         
     })
     res.json({status: 'Post created'})
 }
+
+// ---------------------------------------
+// THESE ARE FOR EXISTENT POSTS ONLY
+// use to publish existent (saved) post
+postController.publishPost = () => {
+
+}
+
+// use to save existent (published) post
+postController.savePost = () => {
+    
+}
+// ---------------------------------------
 
 postController.editPost = async (req, res) => {
     const { title, content, tags } = req.body
