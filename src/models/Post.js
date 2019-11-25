@@ -29,6 +29,10 @@ const postSchema = new Schema({
     comments: {
         type: [{content: String, user_id: Schema.Types.ObjectId}],
         default: []
+    },
+    published: {
+        type: Boolean,
+        required: true
     }
 })
 
