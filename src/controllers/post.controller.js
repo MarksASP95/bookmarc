@@ -70,27 +70,57 @@ postController.createPost = async (req, res) => {
 // ---------------------------------------
 // THESE ARE FOR EXISTENT POSTS ONLY
 // use to publish existent (saved) post
-postController.publishPost = () => {
-
+const publishPost = async (id, callback) => {
+    await Post.findByIdAndUpdate(id, {published: true}, (error, result) => {
+        if(error) { 
+            res.json({status: `Post could not be moved to publishes. ${error}`}) 
+            return
+        }
+        callback({status: "Post was moved to publishes!"})
+    })
 }
 
 // use to save existent (published) post
-postController.savePost = () => {
-    
+const savePost = async (id, callback) => {
+    await Post.findByIdAndUpdate(id, {published: false}, (error, result) => {
+        if(error) { 
+            res.json({status: `Post could not be moved to saves. ${error}`}) 
+            return
+        }
+        callback({status: "Post was moved to saves!"})
+    })
+
 }
 // ---------------------------------------
 
 postController.editPost = async (req, res) => {
-    const { title, content, tags } = req.body
-    await Post.findOneAndUpdate(
-        {_id: req.params.id},
-        {
-            title: title,
-            content: content,
-            tags: tags
-        }
-    )
-    res.json({status: "Post edited"})
+
+    const fullEdit = async () => {
+        const { title, content, tags } = req.body
+        await Post.findOneAndUpdate(
+            {_id: req.params.id},
+            {
+                title: title,
+                content: content,
+                tags: tags
+            }
+        )
+        res.json({status: "Post edited"})
+    }
+
+    switch(req.body.action) {
+        case 'save':
+            savePost(req.params.id, (response) => res.json(response))
+            break;
+        case 'publish':
+            publishPost(req.params.id, (response) => res.json(response))
+            break;
+        case 'full':
+            fullEdit()
+            break;
+        default:
+            res.json({status: "No action was sent"})
+    }
 }
 
 postController.deletePost = async (req, res) => {
