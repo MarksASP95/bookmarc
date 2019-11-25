@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import './NewPost.scss'
 import '../../constants/styles/common/button.scss'
 
+import coverImage from '../../assets/images/test/network.jpg'
+
 import { Formik, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
@@ -13,6 +15,7 @@ import 'toastr/toastr.scss'
 import PageTitle from './../common/PageTitle/PageTitle'
 import ChipsContainer from './../common/ChipsContainer/ChipsContainer'
 import LoadingBar from './../common/LoadingBar/LoadingBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class NewPost extends Component {
     
@@ -23,7 +26,8 @@ export default class NewPost extends Component {
             tags: [],
             redirect: false,
             isAttemptingToPost: false,
-            posted: false
+            posted: false,
+            gotImage: false
         }
 
         // settin toastr options
@@ -31,6 +35,18 @@ export default class NewPost extends Component {
         toastr.options.showMethod = 'fadeIn'
         // disable click event on every toastr after it's hidden
         toastr.options.onHidden = () => {toastr.options.onCloseClick = null}
+    }
+
+    attemptUpload() {
+        // implement upload here
+
+        this.setState({gotImage: true})
+    }
+
+    deleteImage() {
+        // implement delete here
+
+        this.setState({gotImage: false})
     }
 
     addTagHandler(e, newTag, callback) {
@@ -188,7 +204,8 @@ export default class NewPost extends Component {
                                     {props.errors.tags && props.touched.tagsStr && <p className="error">{props.errors.tags}</p>}
                                     <ChipsContainer onDeleteItem={this.deleteTag.bind(this)} items={this.state.tags} />
                                 </div>
-                               <div className="button-container">
+
+                                <div className="button-container">
                                     <button 
                                         className={`bm-button main medium publish-post-button ${cursorClass}`}
                                         type="button"
@@ -214,6 +231,29 @@ export default class NewPost extends Component {
                                     </button>
                                </div>
                             </form>
+                            <div className="upload-image-container">
+                                <label className="bm-label">
+                                    Cover image <span className="bm-label-note">(make it a big one)</span>
+                                </label>
+                                {this.state.gotImage ?
+                                    <React.Fragment>
+                                        <div 
+                                            className="image-container" 
+                                            style={{backgroundImage:`url(${coverImage})`}}>
+                                        </div>
+                                        <div className="upload-image-controls">
+                                            <button className="bm-button secondary" onClick={this.attemptUpload.bind(this)}>Change image</button>
+                                            <button className="bm-button secondary medium" onClick={this.deleteImage.bind(this)}>Delete</button>
+                                        </div>
+                                    </React.Fragment>
+                                    :
+                                    <div className="upload-image-start">
+                                        <button className="bm-button main large add-image-button" onClick={this.attemptUpload.bind(this)}>
+                                            <span><FontAwesomeIcon icon="upload" /></span>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
                             {this.state.redirect ? <Redirect to="/" /> : null}
                         </React.Fragment>
                     )}
