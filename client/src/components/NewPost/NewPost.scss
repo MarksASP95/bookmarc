@@ -3,12 +3,77 @@
 @import '../../constants/styles/forms/label';
 
 .new-post-component {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
     grid-column: 1/25;
+    column-gap: 20px;
     position: relative;
+
+    .page-title-component {
+        grid-column: 1/25;
+    }
 
     .bm-input {
         &.tags {
             width: 40%;
+        }
+    }
+
+    form {
+        grid-column: 1/17;
+    }
+
+    .upload-image-start {
+
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        .add-image-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block; 
+            
+            span {
+                font-size: 80px;
+            }
+        }
+
+        // .add-image-button:after {
+        //     content: "";
+        //     display: block;
+        //     padding-bottom: 100%;
+        // }
+    }
+
+    .upload-image-container {
+        border: 3px solid $dark-aqua;
+        border-radius: 20px;
+        grid-column: 17/25;
+        height: 400px;
+        margin-top: -13px;
+        padding: 10px;
+
+        .image-container {
+            margin-top: 15px;
+            height: 75%;
+            background-color: $blueck;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            border: 3px solid $dark-aqua;
+        }
+
+        .upload-image-controls {
+            position: relative;
+            display: flex;
+            height: 10%;
+            top: 10px;
+            justify-content: space-between;
+            justify-items: center;
         }
     }
 
