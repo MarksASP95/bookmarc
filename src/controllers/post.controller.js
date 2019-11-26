@@ -4,11 +4,12 @@ const { createOrIncreaseTags } = require('../controllers/tag.controller')
 
 const postController = {}
 
+// Feed
 postController.getPosts = async (req, res) => {
     if(Object.keys(req.query).length === 0){
         // no es busqueda. devolver todos
 
-        await Post.find({}).sort({date: 'desc'})
+        await Post.find({published: true}).sort({date: 'desc'})
             .then( posts => {
                 User.populate(posts, {path: "author"}, (err, posts) => {
                     res.json(posts)
@@ -24,7 +25,8 @@ postController.getPosts = async (req, res) => {
             author: new RegExp(author),
             tags: {
                 $in: [tags]
-            }
+            },
+            published: true
         })
         res.json(posts)
     }
@@ -46,7 +48,10 @@ postController.getPost = async (req, res) => {
 // use to create a post that is unexistent and publish/save it right away
 // USE FOR NEW POSTS ONLY (e.g.: on "NewPost component" to be specific)
 postController.createPost = async (req, res) => {
-    const { title, author, content, tags, published } = req.body
+    const { title, author, content, tags, postAction } = req.body
+
+    const published = (postAction === 'publish')
+
     const newPost = new Post({
         title: title,
         author: author,
@@ -60,11 +65,12 @@ postController.createPost = async (req, res) => {
             res.json({status: `Post could not be created. ${error}`})
             return
         }
-        
-        published ? createOrIncreaseTags(tags) :  null
-        
+        else {
+            res.json({status: postAction})
+            published ? createOrIncreaseTags(tags) :  null
+        }
+
     })
-    res.json({status: 'Post created'})
 }
 
 // ---------------------------------------
