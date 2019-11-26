@@ -5,7 +5,7 @@ import '../../constants/styles/common/button.scss'
 
 import coverImage from '../../assets/images/test/network.jpg'
 
-import { Formik, ErrorMessage } from 'formik'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
@@ -27,6 +27,7 @@ export default class NewPost extends Component {
             redirect: false,
             isAttemptingToPost: false,
             posted: false,
+            createPostAction: null,
             gotImage: false
         }
 
@@ -75,7 +76,7 @@ export default class NewPost extends Component {
         this.setState({tags: tags})
     }
 
-    handlePostResult(success) {
+    handlePostResult(success, actionTaken) {
 
         const onError = () => {
             toastr.options.onclick = () => {
@@ -85,7 +86,15 @@ export default class NewPost extends Component {
         }
 
         const onSuccess = () => {
-            toastr.success('Your post has been submitted! Readers can now find it.', 'Yay!')
+            switch(actionTaken) {
+                case 'publish':
+                    toastr.success('Your post has been submitted! Readers can now find it.', 'Yay!')
+                    break;
+                case 'save':
+                    toastr.success("Your post has been saved! It's only available for you.", 'Done!')
+                    break;
+            }
+            
         }
 
         setTimeout(() => {
@@ -98,14 +107,16 @@ export default class NewPost extends Component {
     sendCreatePostRequest(data) {
         this.setState({isAttemptingToPost: true})
 
-        axios.post('http://localhost:4000/api/poss', {
+        axios.post('http://localhost:4000/api/posts', {
             title: data.title,
             author: "5dc2e5bab8b6602b943087db",
             content: data.content,
-            tags: data.tags
+            tags: data.tags,
+            postAction: data.postAction
         })
         .then(response => {
-            this.handlePostResult(true)
+            this.handlePostResult(true, response.data.status)
+            console.log(response)
         })
         .catch(error => {
             this.handlePostResult(false)
@@ -149,11 +160,10 @@ export default class NewPost extends Component {
                 <PageTitle title="New post!" />
 
                 <Formik
-                    initialValues={{ title: '', content: '', tagsStr: '', tags: [] }}
+                    initialValues={{ title: '', content: '', tagsStr: '', tags: [], postAction: null }}
                     validationSchema={this.postSchema}
                     onSubmit={(values, actions) => {
                         values.tags = this.state.tags
-                        
                         this.sendCreatePostRequest(values)
                     }}
                     >
@@ -209,7 +219,10 @@ export default class NewPost extends Component {
                                     <button 
                                         className={`bm-button main medium publish-post-button ${cursorClass}`}
                                         type="button"
-                                        onClick={props.handleSubmit}
+                                        onClick={() => {
+                                            props.values.postAction = 'publish'
+                                            props.handleSubmit()
+                                        }}
                                         disabled={this.state.isAttemptingToPost}
                                         >
                                         Publish
@@ -217,6 +230,10 @@ export default class NewPost extends Component {
                                     <button 
                                         className={`bm-button secondary medium save-post-button ${cursorClass}`}
                                         type="button"
+                                        onClick={() => {
+                                            props.values.postAction = 'save'
+                                            props.handleSubmit()
+                                        }}
                                         disabled={this.state.isAttemptingToPost}
                                         >
                                         Save
