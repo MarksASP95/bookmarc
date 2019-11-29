@@ -21,10 +21,8 @@ const PostCard = (props) => {
         tags = `${tags} #${tag}`
     })
 
-    const postCardType = props.main ? 'main' : 'regular'
-
     return (
-        <div className={`postcard-component ${postCardType} aqua-black-border shadow-side`}>
+        <div className={`postcard-component ${props.type} aqua-black-border shadow-side`}>
             {props.main ? <div className="post-banner" style={{backgroundImage:`url(${postBanner})`}}></div> : null}
             <div className="post-meta">
                 <h2 className="post-title">{props.title}</h2>
