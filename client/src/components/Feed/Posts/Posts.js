@@ -10,7 +10,7 @@ export default class Posts extends Component {
             <div className="posts-component">
                 {this.props.posts.map((post, index) => (
                     <PostCard
-                        main={index === 0}
+                        type={index === 0 ? 'main' : 'regular'}
                         title={post.title}
                         author={post.author.username}
                         date={new Date(post.date)}
