@@ -1,0 +1,65 @@
+@import '../../../constants/styles/colors';
+@import '../../../constants/styles/fonts';
+
+.popup-component {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 999;
+    background-color: rgba($color: grey, $alpha: 0.7);
+
+    .popup-text-container {
+        background-color: $white;
+        min-height: 30vh;
+        max-height: 80vh;
+        width: 40vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 40px 0;
+        overflow: auto;
+
+        .popup-close-button {
+            background-color: transparent;
+            border: none;
+            color: $dark-aqua;
+            font-size: 3vh;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .popup-title {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 3vh;
+            max-width: 60%;
+            margin: 0 auto;
+            font-family: $post_title;
+            word-break: break-word;
+        }
+    
+        .popup-content {
+            width: 75%;
+            margin: 0 auto;
+            margin-top: 30px;
+            font-size: 3vh;
+            font-family: $post_meta;
+            word-break: break-word;
+        }
+
+        .popup-list {
+            margin-top: 20px;
+
+            li {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+
+}

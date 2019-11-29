@@ -9,15 +9,16 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import toastr from 'toastr'
 import 'toastr/toastr.scss'
 
-import PageTitle from './../common/PageTitle/PageTitle'
-import ChipsContainer from './../common/ChipsContainer/ChipsContainer'
-import LoadingBar from './../common/LoadingBar/LoadingBar';
+import PageTitle from '../common/PageTitle/PageTitle'
+import ChipsContainer from '../common/ChipsContainer/ChipsContainer'
+import LoadingBar from '../common/LoadingBar/LoadingBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default class NewPost extends Component {
+class NewPost extends Component {
     
     constructor(props) {
         super(props)
@@ -28,7 +29,8 @@ export default class NewPost extends Component {
             isAttemptingToPost: false,
             posted: false,
             createPostAction: null,
-            gotImage: false
+            gotImage: false,
+            showPopup: false
         }
 
         // settin toastr options
@@ -80,7 +82,7 @@ export default class NewPost extends Component {
 
         const onError = () => {
             toastr.options.onclick = () => {
-                // show possible reasons why the post was not submitted
+                this.props.onTogglePopup()
             }
             toastr.error('Something wrong happened. Click for more info', 'Oops!')
         }
@@ -107,7 +109,7 @@ export default class NewPost extends Component {
     sendCreatePostRequest(data) {
         this.setState({isAttemptingToPost: true})
 
-        axios.post('http://localhost:4000/api/posts', {
+        axios.post('http://localhost:4000/api/pots', {
             title: data.title,
             author: "5dc2e5bab8b6602b943087db",
             content: data.content,
@@ -134,7 +136,7 @@ export default class NewPost extends Component {
         title: Yup.string()
             .min(2, 'This title is too short')
             .max(100, 'Woah! Less than 100 characters okay?')
-            .required('A post needs a name!'),
+            .required('A post needs a title!'),
         content: Yup.string()
             .min(200, 'A post should have at least 200 characters')
             .required('Uuh yeah, you have to write something'),
@@ -280,3 +282,22 @@ export default class NewPost extends Component {
         )
     }
 }
+
+// const mapStateToProps = state => {
+//     return {
+//         showPopup: state.showPopup
+//     }
+// }
+
+const matchDispatchToProps = dispatch => {
+    return {
+        onTogglePopup: () => dispatch({
+            type: 'TOGGLE_POPUP', 
+            title: "Why wasn't my post submitted?", 
+            content: "These could be some of the reasons:",
+            list: ["You lack internet connection", "You are logged out", "There was an error on the server"]
+        })
+    }
+}
+
+export default connect(null, matchDispatchToProps)(NewPost)

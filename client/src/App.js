@@ -4,31 +4,57 @@ import './App.scss';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faBell, faUser, faHeart, faComment, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faBell, faUser, faHeart, faComment, faUpload, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
 
 import Header from './components/Header/Header'
 import Container from './components/Container/Container'
 import Display from './components/Display/Display'
 import Feed from './components/Feed/Feed'
 import NewPost from './components/NewPost/NewPost'
+import Popup from './components/common/Popup/Popup';
 
-function App() {
+library.add(faPlus, faBell, faUser, faHeart, faComment, faUpload, faTimes)
 
-  library.add(faPlus, faBell, faUser, faHeart, faComment, faUpload)
+class App extends React.Component {
 
-  return (
-    <div className="App">
-      <Router>
-        <Header />
-        <Container>
-          <Display>
-            <Route path="/" exact component={Feed} />
-            <Route path="/create-post" component={NewPost} />
-          </Display>
-        </Container>
-      </Router>
-    </div>
-  );
+  state = {
+    showPopup: false,
+    popupTitle: null,
+    popupContent: null,
+    popupList: null
+  }
+  
+
+  render() {
+    return (
+      <div className="App">
+        <Router>
+          { this.props.showPopup ? 
+            <Popup title={this.props.popupTitle} content={this.props.popupContent} list={this.props.popupList} />
+            :
+            null
+          }
+          <Header />
+          <Container>
+            <Display>
+              <Route path="/" exact component={Feed} />
+              <Route path="/create-post" component={NewPost} />
+            </Display>
+          </Container>
+        </Router>
+      </div>
+    )
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    showPopup: state.showPopup,
+    popupTitle: state.popupTitle,
+    popupContent: state.popupContent,
+    popupList: state.popupList
+  }
+}
+
+export default connect(mapStateToProps, null)(App);
