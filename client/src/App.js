@@ -12,7 +12,8 @@ import Container from './components/Container/Container'
 import Display from './components/Display/Display'
 import Feed from './components/Feed/Feed'
 import NewPost from './components/NewPost/NewPost'
-import Popup from './components/common/Popup/Popup';
+import Popup from './components/common/Popup/Popup'
+import PostView from './components/PostView/PostView'
 
 library.add(faPlus, faBell, faUser, faHeart, faComment, faUpload, faTimes)
 
@@ -40,6 +41,7 @@ class App extends React.Component {
             <Display>
               <Route path="/" exact component={Feed} />
               <Route path="/create-post" component={NewPost} />
+              <Route path="/post/:post_id" component={PostView} />
             </Display>
           </Container>
         </Router>
