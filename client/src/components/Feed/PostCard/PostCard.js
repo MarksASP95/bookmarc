@@ -17,9 +17,9 @@ const PostCard = (props) => {
         "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ]
 
-    let tags = ""
+    let tags = []
     props.tags.forEach(tag => {
-        tags = `${tags} #${tag}`
+        tags.push(<span className="tag">#{tag}</span>)
     })
 
     const getPostMetaData = () => {
@@ -64,7 +64,7 @@ const PostCard = (props) => {
                 return {
                     bannerElement: bannerDiv,
                     userPictureElement: null,
-                    metaMainElement: null,
+                    metaMainElement: postMetaMainP,
                     feedbackElement: null,
                     byUserElement: null
                 }
