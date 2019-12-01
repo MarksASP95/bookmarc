@@ -41,8 +41,12 @@ postController.getPublishedPosts = (req, res) => {
 }
 
 postController.getPost = async (req, res) => {  
-    const post = Post.findById(req.params.id);
-    res.json(post);
+    await Post.findById(req.params.id)
+        .then(post => {
+            User.populate(post, {path: "author"}, (err, post) => {
+                res.json(post)
+            })  
+        })
 }
 
 // use to create a post that is unexistent and publish/save it right away
