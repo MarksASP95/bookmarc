@@ -70,7 +70,7 @@ postController.createPost = async (req, res) => {
             return
         }
         else {
-            res.json({status: postAction})
+            res.json({status: postAction, postId: result._id})
             published ? createOrIncreaseTags(tags) :  null
         }
 
