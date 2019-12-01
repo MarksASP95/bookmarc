@@ -30,7 +30,8 @@ class NewPost extends Component {
             posted: false,
             createPostAction: null,
             gotImage: false,
-            showPopup: false
+            showPopup: false,
+            newPostId: null
         }
 
         // settin toastr options
@@ -78,7 +79,9 @@ class NewPost extends Component {
         this.setState({tags: tags})
     }
 
-    handlePostResult(success, actionTaken) {
+    handlePostResult(success, response) {
+
+        const actionTaken = response.data.status
 
         const onError = () => {
             toastr.options.onclick = () => {
@@ -101,7 +104,7 @@ class NewPost extends Component {
 
         setTimeout(() => {
             success ? onSuccess() : onError()
-            this.setState({isAttemptingToPost: success, posted: success})
+            this.setState({isAttemptingToPost: success, posted: success, newPostId: response.data.postId})
         }, 600);
     }
 
@@ -109,7 +112,7 @@ class NewPost extends Component {
     sendCreatePostRequest(data) {
         this.setState({isAttemptingToPost: true})
 
-        axios.post('http://localhost:4000/api/pots', {
+        axios.post('http://localhost:4000/api/posts', {
             title: data.title,
             author: "5dc2e5bab8b6602b943087db",
             content: data.content,
@@ -117,8 +120,7 @@ class NewPost extends Component {
             postAction: data.postAction
         })
         .then(response => {
-            this.handlePostResult(true, response.data.status)
-            console.log(response)
+            this.handlePostResult(true, response)
         })
         .catch(error => {
             this.handlePostResult(false)
@@ -273,7 +275,7 @@ class NewPost extends Component {
                                     </div>
                                 }
                             </div>
-                            {this.state.redirect ? <Redirect to="/" /> : null}
+                            {this.state.redirect ? <Redirect to={`/post/${this.state.newPostId}`} /> : null}
                         </React.Fragment>
                     )}
                 </Formik>
