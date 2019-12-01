@@ -74,7 +74,7 @@ const PostCard = (props) => {
     const postMetaData = getPostMetaData()
 
     return (
-        <div className={`postcard-component ${props.type} aqua-black-border shadow-side`}>
+        <div className={`postcard-component ${props.type} aqua-black-border shadow-side`} onClick={props.onClick}>
             {postMetaData.bannerElement}
             <div className="post-meta">
                 <h2 className="post-title">{props.title}</h2>
