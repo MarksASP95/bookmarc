@@ -10,7 +10,7 @@ export default function PostView(props) {
 
     const [post, setPost] = useState(null);
 
-    const postId = '5dd44565a03fc40fc400eb9c'
+    const postId = '5dd449920cff212a48d33ea5'
 
     useEffect(() => {
         const getPost = async () => {
@@ -30,9 +30,9 @@ export default function PostView(props) {
         <div className='post-view-component'>
             {post ?
             <PostCard
-                type='main'
+                type='view'
                 title={post.title}
-                author={post.author.username}m
+                author={post.author.name}
                 date={new Date(post.date)}
                 tags={post.tags}
                 num_likes={post.num_likes}
