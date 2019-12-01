@@ -3,6 +3,7 @@
 .postcard-component.main {
 
     grid-template-rows: 200px 1fr;
+    cursor: pointer;
 
     .post-banner {
         grid-column: 1/13;
