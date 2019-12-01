@@ -10,7 +10,7 @@ export default function PostView(props) {
 
     const [post, setPost] = useState(null);
 
-    const postId = '5dd449920cff212a48d33ea5'
+    const postId = '5dd5d7384b243a1d88bc16fe'
 
     useEffect(() => {
         const getPost = async () => {
@@ -29,20 +29,26 @@ export default function PostView(props) {
     return (
         <div className='post-view-component'>
             {post ?
-            <PostCard
-                type='view'
-                title={post.title}
-                author={post.author.name}
-                date={new Date(post.date)}
-                tags={post.tags}
-                num_likes={post.num_likes}
-                num_comments={post.comments.length}
-                read_minutes={Math.ceil(post.content.split(" ").length / 220)}
-            /> 
-            // JSON.stringify(post.data)
+            <React.Fragment>
+                <PostCard
+                    type='view'
+                    title={post.title}
+                    author={post.author.name}
+                    date={new Date(post.date)}
+                    tags={post.tags}
+                    num_likes={post.num_likes}
+                    num_comments={post.comments.length}
+                    read_minutes={Math.ceil(post.content.split(" ").length / 220)}
+                /> 
+                <div className="post-content">
+                    {post.content}
+                </div>
+            </React.Fragment>
             :
             null
             }
+
+
 
         </div>
     )
