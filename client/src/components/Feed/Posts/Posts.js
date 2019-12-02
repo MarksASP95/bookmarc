@@ -23,7 +23,7 @@ export default class Posts extends Component {
                     <PostCard
                         type={index === 0 ? 'main' : 'regular'}
                         title={post.title}
-                        author={post.author.username}
+                        author={post.author.name}
                         date={new Date(post.date)}
                         tags={post.tags}
                         num_likes={post.num_likes}
