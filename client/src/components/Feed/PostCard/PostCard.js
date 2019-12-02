@@ -80,7 +80,7 @@ const PostCard = (props) => {
                 <h2 className="post-title">{props.title}</h2>
                 {postMetaData.userPictureElement}
                 {postMetaData.metaMainElement}
-                <p className="tags">{tags}</p>
+                <div className="tags">{tags}</div>
                 {postMetaData.feedbackElement}
                 {postMetaData.byUserElement}
                 <span className="read-minutes">{`${props.read_minutes} minute read`}</span>
