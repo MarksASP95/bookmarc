@@ -103,6 +103,14 @@ const savePost = async (id, callback) => {
 }
 // ---------------------------------------
 
+const handleLike = async (id, like, callback) => {
+    const incBy = like ? 1 : -1
+    await Post.findByIdAndUpdate(id, {$inc: {num_likes: incBy}})
+        .then(result => {
+            callback({status:incBy})
+        })
+}
+
 postController.editPost = async (req, res) => {
 
     const fullEdit = async () => {
@@ -127,6 +135,9 @@ postController.editPost = async (req, res) => {
             break;
         case 'full':
             fullEdit()
+            break;
+        case 'like':
+            handleLike(req.params.id, req.body.like, (response) => res.json(response))
             break;
         default:
             res.json({status: "No action was sent"})
