@@ -4,7 +4,7 @@ import './App.scss';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faBell, faUser, faHeart, faComment, faUpload, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faBell, faUser, faHeart, faComment, faUpload, faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 
 import Header from './components/Header/Header'
@@ -15,7 +15,7 @@ import NewPost from './components/NewPost/NewPost'
 import Popup from './components/common/Popup/Popup'
 import PostView from './components/PostView/PostView'
 
-library.add(faPlus, faBell, faUser, faHeart, faComment, faUpload, faTimes)
+library.add(faPlus, faBell, faUser, faHeart, faComment, faUpload, faTimes, faBars)
 
 class App extends React.Component {
 
