@@ -56,6 +56,9 @@ export default class Header extends Component {
                                     <FontAwesomeIcon icon="user" />
                                 </Link>
                             </div>
+                            <div className="header-button menu-button">
+                                <FontAwesomeIcon icon="bars" />
+                            </div>
                         </div>
 
                     </div>

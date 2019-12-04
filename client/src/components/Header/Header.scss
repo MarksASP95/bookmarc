@@ -1,5 +1,6 @@
 @import '../../constants/styles/fonts';
 @import '../../constants/styles/colors';
+@import '../../constants/styles/breakpoints';
 
 $header-height: 50px;
 
@@ -47,6 +48,10 @@ $header-height: 50px;
                 background-size: auto 60%;
                 padding-left: 44px;
             }
+
+            @media screen and (max-width: $tb_p) {
+                display: none;
+            }
         }
 
         .header-buttons {
@@ -92,9 +97,6 @@ $header-height: 50px;
             .header-button:first-child {
                 border: none;
             }
-            .header-button {
-                // border-left: 2px solid $light-aqua;
-            }
 
             .create-post-button {
                 grid-column: 1/4;
@@ -111,6 +113,28 @@ $header-height: 50px;
             }
             .user-button {
                 grid-column: 5/6;
+            }
+            .menu-button {
+                grid-column: 4/6;
+                display: none;
+                text-align: center;
+                cursor: pointer;
+
+                svg {
+                    height: 100%;
+                    color: $white;
+                    font-size: 28px;
+                }
+
+            }
+
+            @media screen and (max-width: $tb_p) {
+                .create-post-button, .notifications-button, .user-button {
+                    display: none;
+                }
+                .menu-button {
+                    display: block;
+                }
             }
         }
 
